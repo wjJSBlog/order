@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>可视化界面</title>
+    <link href="./src/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./src/css/jquery.pageslide.css">
+    <style>
+        .center {
+            text-align: center
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            height: 50px;
+            font-size: 24px;
+            line-height: 50px;
+            box-shadow: 0px 0px 2px 0px #ccc, 2px 2px 2px 2px #ccc;
+        }
+
+        .link {
+            height: 55px;
+            display: inline-block;
+            width: 100%;
+            line-height: 55px;
+            vertical-align: middle;
+            color: #fff;
+            background-color: #4cb0f9;
+            -webkit-transition-property: all;
+            transition-property: all;
+            -webkit-transition-duration: .3s;
+            transition-duration: .3s;
+        }
+
+        .link:hover {
+            color: #fff;
+            background: #007bff;
+            text-decoration: none;
+        }
+
+        .link.active {
+            background: #007bff;
+        }
+
+        .main {
+            top: 50px;
+            bottom: 55px;
+            left: 0;
+            right: 0;
+        }
+
+        iframe {
+            border-width: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="fixed-top">
+            <h1 class="display-4 center header">白沙物流视觉检测</h1>
+        </div>
+        <div class="main position-absolute">
+            <iframe src="time.html" ref="iframe" style="width:100%;height:100%; overflow: hidden;" name="main">
+
+            </iframe>
+        </div>
+        <div class="fixed-bottom">
+            <div class="d-flex bd-highlight center">
+                <div class="flex-fill align-items-center bd-highlight">
+                    <a href="javascript:void(0)" target="main" class="link" @click="$refs['iframe'].src='time.html';active = 1" :class="{active: active === 1}">
+                        实时订单管理
+                    </a>
+                </div>
+                <div class="flex-fill align-items-center bd-highlight" >
+                    <a href="javascript:void(0)" target="main" class="link"  @click="$refs['iframe'].src='index.html';active = 2" :class="{active: active === 2}">
+                        订单管理
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="error.html" class="second btn btn-danger" style="position: absolute;top:50%;right:0; z-index: 9999999999; width: 32px;padding: 0 8px;height: 100px;white-space: normal;">错误信息</a>
+    <script src="./src/lib/jquery-3.3.1.js"></script>
+    <script src="./src/lib/vue.js"></script>
+    <script src="./src/lib/bootstrap.min.js"></script>
+    <script src="./src/lib/jquery.pageslide.js"></script>
+    <script src="./src/lib/socket.io.js"></script>
+    <script>
+
+    </script>
+    <!-- <script>
+        var socket = io('http://127.0.0.1:3000');
+        socket.on('init', function (data) {
+            console.log(data);
+        });
+        socket.on('orders', function (data) {
+            console.log(data);
+        });
+    </script> -->
+
+    <script>
+        new Vue({
+            el: ".container-fluid",
+            data:function(){
+                return {
+                    active: 1
+                }
+            },
+            mounted:function(){
+                var table = null;
+                $(".second").pageslide({
+                    direction: "left",
+                    modal: true,
+                    speed: 300
+                });
+                $("#pageslide-btn").on("click", function () {
+                    $.pageslide.close()
+                });
+            },
+            created: function(){
+
+            }
+        })
+    </script>
+</body>
+
+</html>
