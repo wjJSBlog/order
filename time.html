@@ -109,6 +109,30 @@
             background:#ff9800 linear-gradient(180deg, #ffa726, #ff9800) repeat-x;
             color: #fff;
         }
+
+        .c-modal {
+            display: block;
+            top:auto;
+            right:auto;
+            bottom: 0;
+            left: -25%;
+            width: 25%; 
+        }
+    
+        .c-modal .modal-dialog {
+            margin-bottom: 2px;
+        }
+        .c-modal .modal-dialog,
+        .c-modal .modal-content {
+            height: 300px;
+        }
+        
+        .modal-body {
+            text-align: center;
+        }
+        .modal-body img{
+            width: 80%;
+        }
     </style>
 </head>
 
@@ -380,6 +404,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal c-modal" ref="modal">
+            <div class="modal-dialog bg-primary" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">实时图片</h5>
+                        <button type="button" class="close" @click="closeModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537870062621&di=afa97a5202cc80e88b350dc7b5b2a969&imgtype=0&src=http%3A%2F%2Fc.img.youboy.com%2F201012%2F25%2F9%2Fg0%2Fg0_9461535.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="./src/lib/vue.js"></script>
@@ -401,7 +441,28 @@
     </script> -->
 
     <script>
-        $(document).ready(function () {});
+        new Vue({
+            el: ".main",
+            data: function () {},
+            methods: {
+                showModal: function () {
+                    var modal = this.$refs["modal"];
+                    $(modal).stop().animate({
+                        left: 1
+                    }, "slow")
+                },
+                closeModal: function () {
+                    var modal = this.$refs["modal"];
+                    $(modal).stop().animate({
+                        left: "-25%"
+                    }, "slow")
+                }
+            },
+            mounted: function () {
+                this.showModal();
+            },
+            created: function () {}
+        })
     </script>
 </body>
 

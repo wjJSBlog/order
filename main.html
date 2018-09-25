@@ -6,7 +6,7 @@
     <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>可视化界面</title>
-    <link href="./src/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./src/css/bootstrap.materia.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./src/css/jquery.pageslide.css">
     <style>
         .center {
@@ -55,6 +55,18 @@
 
         iframe {
             border-width: 0;
+            outline: none;
+        }
+
+        .c-alter {
+            width: 300px;
+            left: auto;
+            bottom: -400px;
+            right: 20px;    
+        }
+
+        .btn-layer{
+            position: absolute;top:50%;right:0; z-index: 9999999999; width: 32px;padding: 0 8px;height: 100px;white-space: normal;
         }
     </style>
 </head>
@@ -72,19 +84,26 @@
         <div class="fixed-bottom">
             <div class="d-flex bd-highlight center">
                 <div class="flex-fill align-items-center bd-highlight">
-                    <a href="javascript:void(0)" target="main" class="link" @click="$refs['iframe'].src='time.html';active = 1" :class="{active: active === 1}">
+                    <a href="javascript:void(0)" target="main" class="link" @click="$refs['iframe'].src='time.html';active = 1"
+                        :class="{active: active === 1}">
                         实时订单管理
                     </a>
                 </div>
-                <div class="flex-fill align-items-center bd-highlight" >
-                    <a href="javascript:void(0)" target="main" class="link"  @click="$refs['iframe'].src='index.html';active = 2" :class="{active: active === 2}">
+                <div class="flex-fill align-items-center bd-highlight">
+                    <a href="javascript:void(0)" target="main" class="link" @click="$refs['iframe'].src='index.html';active = 2"
+                        :class="{active: active === 2}">
                         订单管理
                     </a>
                 </div>
             </div>
         </div>
+        <div class="alert alert-dismissible alert-danger fixed-bottom c-alter" ref="alter">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>订单: 123456789XXXX 出现错误信息！！！</p>
+            <p>错误信息: 白沙烟多扫描了</p>
+        </div>
     </div>
-    <a href="error.html" class="second btn btn-danger" style="position: absolute;top:50%;right:0; z-index: 9999999999; width: 32px;padding: 0 8px;height: 100px;white-space: normal;">错误信息</a>
+    <a href="error.html" class="second btn btn-danger btn-layer">错误信息</a>
     <script src="./src/lib/jquery-3.3.1.js"></script>
     <script src="./src/lib/vue.js"></script>
     <script src="./src/lib/bootstrap.min.js"></script>
@@ -106,23 +125,35 @@
     <script>
         new Vue({
             el: ".container-fluid",
-            data:function(){
+            data: function () {
                 return {
                     active: 1
                 }
             },
-            mounted:function(){
-                var table = null;
-                $(".second").pageslide({
-                    direction: "left",
-                    modal: true,
-                    speed: 300
-                });
-                $("#pageslide-btn").on("click", function () {
-                    $.pageslide.close()
-                });
+            methods: {
+                initPageslide: function () { // 初始化侧边栏
+                    $(".second").pageslide({
+                        direction: "left",
+                        modal: true,
+                        speed: 300
+                    });
+                    $("#pageslide-btn").on("click", function () {
+                        $.pageslide.close()
+                    });
+                }
             },
-            created: function(){
+            mounted: function () {
+                this.initPageslide();
+                var self = this;
+                setTimeout(function () {
+                    var alter = self.$refs["alter"];
+                    $(alter).stop().animate({
+                        bottom: 60
+                    }, "slow")
+                    
+                }, 2000)
+            },
+            created: function () {
 
             }
         })
